@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-ygkgbcakx!63wgq*-n!*@b$uss9j^2t6!ae2r$knqu+wz1f!e$
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ['https://quizistic-sinu5550.onrender.com','https://*.127.0.0.1']
 
 # Application definition
 
