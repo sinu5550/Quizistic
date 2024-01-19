@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h2 class="fw-bolder text-center display-4 mt-5">Welcome to <span
+        class="text-danger display-1 fw-bolder ">Quizistic.</span></h2>
+<div class="text-center mt-5">
+    <p class="display-5 ">Make your brain more stonger</p>
+    <p class="display-5 ">By playing Quizzes</p>
+    <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-4  px-5 py-2 mt-5">Take a Quiz</a>
+</div>
+
+
+{% endblock %}

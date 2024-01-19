@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<section>
+    <p class="text-center mt-3 fs-4 fw-medium">Total Quizzes : <span class="text-danger fw-bold">
+            {{quiz | length}}</span>
+    </p>
+    <div class=" row">
+        <div class="col-2">
+            <h3 class="">Categories</h3>
+            <div class="mt-3 d-flex flex-column  gap-3">
+                <a href="{% url 'home'  %}" class="btn btn-outline-dark rounded-0 fw-medium px-2 py-1">ALL</a>
+                {% for c in category %}
+
+                <a href="{% url 'cat_book' c.slug %}"
+                    class="btn btn-outline-dark rounded-0 fw-medium px-2 py-1">{{c.name}}</a>
+
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="col-10">
+
+            <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-3 g-2  mt-2 mb-5">
+                {% for b in book %}
+                <div class="">
+                    <div class="card h-100 border-0 shadow py-3 ">
+                        <img src="{{b.image.url}}" class="card-img-top w-75 mx-auto" alt="...">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="card-title fw-bold fs-4">{{b.title}}</p>
+                                <p class="fw-bold mt-2 text-danger">$ {{b.borrowing_price}}</p>
+                            </div>
+                            <p class="card-text"><span class="text-danger fw-bold ">Category:</span>
+                                {% for cat in b.category.all %}
+                                <button class="btn btn-secondary btn-sm m-1" disabled>{{cat.name}} </button>
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">{{b.description | truncatewords:10}}</p>
+                            <a href="{% url 'book_details' b.id %}" class="btn btn-dark rounded-0">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div class="card my-2">
+    <h5 class="p-3">Total Reviews : {{comments | length}}</h5>
+
+    {% for comment in comments %}
+    <div class="card-body border m-2">
+        <p><b>{{comment.user.username}}</b> <small>at {{comment.created_on}}</small></p>
+        <p>{{comment.body}}</p>
+    </div>
+    {% endfor %}
+
+</div>
+<div class="card my-2">
+    <div class="card-body">
+        <form method="post">
+            <h1>Add Review</h1>
+            {% csrf_token %}
+            {{comment_form | crispy}}
+
+            <button class="btn btn-danger rounded-0" type="submit">Submit</button>
+    </div>
+</div>
+{% endblock %}
