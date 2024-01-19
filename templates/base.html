@@ -38,7 +38,7 @@
                     <div class="fw-medium ">Welcome, {{ request.user.first_name }} {{ request.user.last_name }} </div>
                     <div class="btn-group dropstart">
                         <button type="button" class="btn px-0 border-0 rounded-0" data-bs-toggle="dropdown">
-                            <img src="{% static 'images/answer.png' %}" class="profile-pic rounded-5" alt="">
+                            <img src="{% static 'images/default.png' %}" class="profile-pic rounded-5" alt="">
                         </button>
                         <ul class="dropdown-menu mt-5 ">
                             <li><a href="{% url 'profile' %}" class="rounded-0 text-decoration-none"><button
