@@ -3,13 +3,74 @@
 
 {% block content %}
 
-<h2 class="fw-bolder text-center display-4 mt-5">Welcome to <span
-        class="text-danger display-1 fw-bolder ">Quizistic.</span></h2>
-<div class="text-center mt-5">
-    <p class="display-5 ">Make your brain more stonger</p>
-    <p class="display-5 ">By playing Quizzes</p>
-    <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-4  px-5 py-2 mt-5">Take a Quiz</a>
+<div class="row align-items-center  my-5">
+    <div class="col-6 text-center">
+        <h2 class="fw-bolder display-5 mt-5">Welcome to <span class="text-danger display-3 fw-bolder ">Quizistic.</span>
+        </h2>
+        <div class="mt-5">
+            <p class="display-5 ">Make your brain more stonger</p>
+            <p class="display-5 ">By playing Quizzes</p>
+            <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-4  px-5 py-2 mt-5">Take a Quiz</a>
+        </div>
+    </div>
+    <div class="col-6 d-flex justify-content-center">
+        <img src="{% static 'images/answer.png' %}" class="w-75" alt="Answer Picture">
+    </div>
 </div>
 
 
+<section class="my-5">
+    <div class="d-flex justify-content-center ">
+        <h1 class="display-4 fw-bold border-bottom  border-2 text-center my-3 w-50 py-3">Running Quizzes</h1>
+    </div>
+
+
+    <div class="container">
+        <div class="d-flex justify-content-center ">
+            <a href="{% url 'all_quiz' %}" class="btn btn-light me-2">All Quiz</a>
+            {% for cat in categories %}
+            <a href="{% url 'cat_quiz' cat.slug %}" class="btn btn-light me-2">{{cat.name}}</a>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="container mt-5">
+        {% if quizzes|length > 0 %}
+
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
+
+            {% for quiz in quizzes %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4>{{quiz.title}}</h4>
+                        <p class="card-text">Total Questions - 5</p>
+                        <p class="card-text">{{quiz.description | truncatewords:8}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'question' quiz.id %}" type="button"
+                                    class="btn btn-sm btn-outline-danger">Start
+                                    Quiz</a>
+                                {% else %}
+                                <a href="{% url 'login' %}" type="button" class="btn btn-sm btn-outline-danger">Start
+                                    Quiz</a>
+                                {% endif %}
+
+                            </div>
+                            <small class="text-body-secondary">{{quiz.created_at | timesince}} ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <h3 class="text-danger fw-bolder text-center">There is no Quiz available for this Category.</h3>
+        {% endif %}
+
+    </div>
+
+</section>
 {% endblock %}

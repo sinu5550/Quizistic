@@ -35,7 +35,7 @@
     <tbody>
         {% for r in result %}
         <tr>
-            <td>{{r.id}}</td>
+            <td>{{ forloop.counter }}</td>
             <td>{{r.question}}</td>
             <td>{{r.question.right_opt}}</td>
             {% if r.question.right_opt == r.right_ans %}
