@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from quiz.models import Quiz
+from django.contrib.auth.models import User
 from category.models import Category
+from account.models import UserProfile
 
 def home (request,category_slug=None):
     quizzes = Quiz.objects.order_by('-created_at')
@@ -12,3 +14,4 @@ def home (request,category_slug=None):
     categories = Category.objects.all()
     context ={"quizzes":quizzes, "categories":categories}
     return render(request,'home.html',context)
+

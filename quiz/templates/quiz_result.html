@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="display-3 text-center my-3">Quiz Result</h1>
+<h1 class="display-3 text-center my-3">Quiz Result </h1>
+{% if quiz %}
+<h3 class="text-center"> Quiz Title: {{quiz.title}} </h3>
+
+<h3 class="text-center">Your Score: {{rightAns}}/{{result.count}}</h3>
+
+{% endif %}
 
 
 <h4 class="my-3">Result Details</h4>
 <table class="table table-bordered">
 
+    <tr>
+        <th>Total Question</th>
+        <td>{{result.count}}</td>
+    </tr>
     <tr>
         <th>Total Skipped Question</th>
         <td>{{skipped}}</td>

@@ -97,14 +97,17 @@ class UserLogoutView(LogoutView):
 def profile(request):
     if request.method == 'POST':
         profile_form = forms.ChangeUserForm(request.POST, instance = request.user)
-        if profile_form.is_valid():
+        profile_pic_form = forms.profilePicForm(request.POST, request.FILES or None,instance = request.user)
+        if profile_form.is_valid() and profile_pic_form.is_valid():
             profile_form.save()
+            profile_pic_form.save()
             messages.success(request, 'Profile Updated Successfully !')
             return redirect('profile')
     
     else:
         profile_form = forms.ChangeUserForm(instance = request.user)
-    return render(request, 'profile.html',{'form' : profile_form})
+        profile_pic_form = forms.profilePicForm(request.FILES or None,instance = request.user)
+    return render(request, 'profile.html',{'form' : profile_form , 'profile_pic_form':profile_pic_form})
 
 @login_required
 def pass_change(request):

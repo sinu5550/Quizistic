@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from . import models
 from category.models import Category
@@ -43,7 +43,8 @@ def question_view(request,q_id):
         else:
             models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
 
-    return render(request,'questions.html',{'ques':question,'quiz': quiz, 'lastAttemp':futureTime})
+    return render(request,'questions.html',{'ques':question,'quiz': quiz, 'lastAttemp':futureTime,})
+
 
 @login_required
 def submit_answer_view(request,q_id,ques_id):
@@ -75,17 +76,20 @@ def submit_answer_view(request,q_id,ques_id):
         if question:
             return render(request,'questions.html',{'ques':question,'quiz': quiz})
         else:
-            result = models.UserAnswerSubmit.objects.filter(user=request.user)
-            skipped = models.UserAnswerSubmit.objects.filter(user=request.user,right_ans='Not Submitted').count()
-            attemped = models.UserAnswerSubmit.objects.filter(user=request.user).exclude(right_ans='Not Submitted').count()
+            result = models.UserAnswerSubmit.objects.filter(user=request.user,question__quiz=quiz)
+            skipped = models.UserAnswerSubmit.objects.filter(user=request.user,right_ans='Not Submitted',question__quiz=quiz).count()
+            attemped = models.UserAnswerSubmit.objects.filter(user=request.user,question__quiz=quiz).exclude(right_ans='Not Submitted').count()
             rightAns= 0
             for r in result:
                 if r.question.right_opt == r.right_ans:
                     rightAns+=1
-            return render(request,'quiz_result.html',{'result':result,'skipped':skipped,'attemped':attemped,'rightAns':rightAns})
+            return render(request,'quiz_result.html',{'result':result,'skipped':skipped,'attemped':attemped,'rightAns':rightAns,'quiz_id': q_id,'quiz':quiz})
+        
+        
+        
         
     else:
-        return HttpResponse('Method is not allowed')
+        return redirect('all_quiz')
 
 @login_required   
 def result(request):

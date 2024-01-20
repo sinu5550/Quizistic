@@ -22,8 +22,20 @@ class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+class profilePicForm(forms.ModelForm):
+    profile_image = forms.ImageField(label='Profile Picture', required=False)
+    class Meta:
+        model = UserProfile
+        fields = ['profile_image',] 
+
+
 class ChangeUserForm(UserChangeForm):
     password = None
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email',]
+    
+    def __init__(self, *args, **kwargs):
+        super(ChangeUserForm,self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
+        

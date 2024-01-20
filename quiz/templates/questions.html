@@ -7,27 +7,30 @@
     <h3 class="text-center fw-bold mt-3">Quiz Title: {{quiz.title}}</h3>
     <div class="card my-4">
         {% if ques %}
-        <h4 class="card-header">{{ques.question}} <span id="time" class="float-end">00:00</span></h4>
+
+        <h4 class="card-header">Question <span id="time" class="float-end text-danger">00:00</span></h4>
+
         <form method="post" action="{% url 'submit_answer' quiz.id ques.id%}">
             {% csrf_token %}
             <div class="card-body">
-                <table class="table table-light ">
-                    <tr>
+                <p class="fw-medium fs-3">{{ques.question}}</p>
+                <table class="table table-light">
+                    <tr onclick="selectRadio('option_1', '{{ques.opt_1}}')">
                         <td style="width: 20px;"><input type="radio" value="{{ques.opt_1}}" name="answer"
                                 id="option_1" /></td>
                         <th><label for="option_1">{{ques.opt_1}}</label></th>
                     </tr>
-                    <tr>
+                    <tr onclick="selectRadio('option_2', '{{ques.opt_2}}')">
                         <td style="width: 20px;"><input type="radio" value="{{ques.opt_2}}" name="answer"
                                 id="option_2" /></td>
                         <th><label for="option_2">{{ques.opt_2}}</label></th>
                     </tr>
-                    <tr>
+                    <tr onclick="selectRadio('option_3', '{{ques.opt_3}}')">
                         <td style="width: 20px;"><input type="radio" value="{{ques.opt_3}}" name="answer"
                                 id="option_3" /></td>
                         <th><label for="option_3">{{ques.opt_3}}</label></th>
                     </tr>
-                    <tr>
+                    <tr onclick="selectRadio('option_4', '{{ques.opt_4}}')">
                         <td style="width: 20px;"><input type="radio" value="{{ques.opt_4}}" name="answer"
                                 id="option_4" /></td>
                         <th><label for="option_4">{{ques.opt_4}}</label></th>
@@ -46,6 +49,9 @@
 </div>
 
 <script>
+    function selectRadio(optionId, optionValue) {
+        document.getElementById(optionId).checked = true;
+    }
     document.addEventListener('DOMContentLoaded', function () {
         var submitBtn = document.querySelector('.submitBtn');
 

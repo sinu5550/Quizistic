@@ -2,10 +2,12 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<form style="width: 50%; margin: auto" method="post">
+<form style="width: 50%; margin: auto" method="post" enctype="multipart/form-data">
     <h1 class="mt-5 text-center">Update Your Profile</h1>
 
-    {% csrf_token %} {{form | crispy}}
+    {% csrf_token %}
+    {{form | crispy}}
+    {{profile_pic_form | crispy}}
 
     <div class="text-center">
         <button class="btn btn-danger rounded-0 mb-5" type="submit">Update</button>
