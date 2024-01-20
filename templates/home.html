@@ -10,7 +10,12 @@
         <div class="mt-5">
             <p class="display-5 ">Make your brain more stonger</p>
             <p class="display-5 ">By playing Quizzes</p>
+            {% if user.is_authenticated %}
             <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-4  px-5 py-2 mt-5">Take a Quiz</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-danger rounded-pill fs-4  px-5 py-2 mt-5">Take a Quiz</a>
+            {% endif %}
+
         </div>
     </div>
     <div class="col-6 d-flex justify-content-center">

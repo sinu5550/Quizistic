@@ -14,7 +14,7 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 
-
+@login_required
 def all_quiz_view(request,category_slug=None):
 
     quizzes = models.Quiz.objects.order_by('-created_at')
