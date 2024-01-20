@@ -1,0 +1,16 @@
+<footer class=" container d-flex flex-wrap justify-content-between align-items-center py-3  border-top mt-5">
+    <p class="col-md-4 mb-0 text-body-secondary">© {% now "Y" %} Quizistic. Inc</p>
+
+    <a href="/"
+        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto gap-3 link-body-emphasis text-decoration-none">
+        <i class="bi bi-facebook"></i><i class="bi bi-instagram"></i><i class="bi bi-twitter"></i>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
+        <li class="nav-item"><a href="{% url 'all_quiz' %}" class="nav-link px-2 text-body-secondary">Quiz</a></li>
+        <li class="nav-item"><a href="{% url 'result' %}" class="nav-link px-2 text-body-secondary">Result</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+    </ul>
+</footer>

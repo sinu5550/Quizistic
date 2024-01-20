@@ -7,3 +7,7 @@ body {
 .profile-pic {
     width: 40px;
 }
+
+.quiz-card {
+    max-width: 32%;
+}

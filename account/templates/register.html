@@ -2,20 +2,29 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<form style="width:40% ; margin : auto" method="post" novalidate class="lh-sm ">
-    <h1>{{type}} Page</h1>
-    {% csrf_token %}
-    {% if form.non_field_errors %}
-    {% for er in form.non_field_errors %}
-    <p class="bg-danger text-white p-3">{{er}}</p>
-    {% endfor %}
-    {% endif %}
-    <!-- {{form | crispy}} -->
-    {% for fm in form%} {{fm.label_tag}} {{fm}} <small class="text-danger">
-        <p>{{fm.errors|striptags}}</p>
-    </small>
-    {% endfor %}
-    <button class="btn btn-danger rounded-0 mb-5" type="submit">{{type}}</button>
-</form>
+<div class="shadow w-50 d-flex justify-content-center mx-auto my-5  rounded-3">
+    <form style="width:70% ; margin : auto" method="post" novalidate class="lh-sm my-3">
+        <h1 class="text-center mb-3">{{type}}</h1>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        {% for er in form.non_field_errors %}
+        <p class="bg-danger text-white p-3">{{er}}</p>
+        {% endfor %}
+        {% endif %}
+        <!-- {{form | crispy}} -->
+        {% for fm in form%} {{fm.label_tag}} {{fm}} <small class="text-danger">
+            <p>{{fm.errors|striptags}}</p>
+        </small>
+        {% endfor %}
+        <button class="btn btn-danger rounded-0 mb-3" type="submit">{{type}}</button>
+        <br>
+        {% if type == 'Login' %}
+        <a href="{% url 'register' %}" class="text-decoration-none">Don't have any account? Register</a>
+        {% elif type == 'Register' %}
+        <a href="{% url 'login' %}" class="text-decoration-none">Already have an Account? Login</a>
+        {% endif %}
+
+    </form>
+</div>
 
 {% endblock %}

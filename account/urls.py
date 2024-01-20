@@ -8,5 +8,4 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('profile/edit/pass_change/', views.pass_change, name='pass_change'),
     path('activate/<uidb64>/<token>', views.activate, name='activate')
-    # path('return_book/<int:id>/', views.return_book, name='return_book'),
 ]
