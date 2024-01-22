@@ -1,6 +1,7 @@
 from typing import Protocol
 from django.shortcuts import render,redirect
 from . import forms
+from . import models
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
@@ -97,16 +98,18 @@ class UserLogoutView(LogoutView):
 def profile(request):
     if request.method == 'POST':
         profile_form = forms.ChangeUserForm(request.POST, instance = request.user)
-        profile_pic_form = forms.profilePicForm(request.POST, request.FILES or None,instance = request.user)
+        profile_pic_form = forms.profilePicForm(request.POST, request.FILES or None,instance=request.user.account)
         if profile_form.is_valid() and profile_pic_form.is_valid():
             profile_form.save()
+            profile_pic_form.instance.user = request.user
             profile_pic_form.save()
+            
             messages.success(request, 'Profile Updated Successfully !')
             return redirect('profile')
     
     else:
         profile_form = forms.ChangeUserForm(instance = request.user)
-        profile_pic_form = forms.profilePicForm(request.FILES or None,instance = request.user)
+        profile_pic_form = forms.profilePicForm(instance=request.user.account)
     return render(request, 'profile.html',{'form' : profile_form , 'profile_pic_form':profile_pic_form})
 
 @login_required

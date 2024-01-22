@@ -31,8 +31,12 @@ def all_quiz_view(request,category_slug=None):
 
 @login_required
 def question_view(request,q_id):
+    request.session['question_counter'] = 1
     quiz = models.Quiz.objects.get(id=q_id)
+    models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
     question = models.Question.objects.filter(quiz=quiz).order_by('id').first()
+    
+    
     lastAttemp = None
     futureTime = None
     hoursLimit = 24
@@ -47,7 +51,7 @@ def question_view(request,q_id):
             return all_quiz_view(request,None)
         else:
             models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
-
+    
     return render(request,'questions.html',{'ques':question,'quiz': quiz, 'lastAttemp':futureTime,})
 
 
@@ -76,7 +80,10 @@ def submit_answer_view(request,q_id,ques_id):
             models.UserAnswerSubmit.objects.create(
                 user=user,question=ques,right_ans=answer
             )
-                
+            question_counter = int(request.session.get('question_counter', 1))
+            question_counter += 1
+            request.session['question_counter'] = question_counter
+
             if question:
                 return render(request,'questions.html',{'ques':question,'quiz': quiz})
             else:
@@ -94,6 +101,10 @@ def submit_answer_view(request,q_id,ques_id):
                 messages.warning(request, 'Please select an option before submitting.')
                 return render(request, 'questions.html', {'ques': ques, 'quiz': quiz})
             
+            question_counter = int(request.session.get('question_counter', 1))
+            question_counter += 1
+            request.session['question_counter'] = question_counter
+
             if question:
                 return render(request,'questions.html',{'ques':question,'quiz': quiz})
             else:

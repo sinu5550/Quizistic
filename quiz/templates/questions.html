@@ -8,7 +8,10 @@
     <div class="card my-4">
         {% if ques %}
 
-        <h4 class="card-header">Question <span id="time" class="float-end text-danger">00:00</span></h4>
+        <h4 class="card-header">Question no.
+            {{ request.session.question_counter|default:"1"}} out of {{quiz.question_set.count}}<span id="time"
+                class="float-end text-danger">00:00</span>
+        </h4>
 
         <form method="post" action="{% url 'submit_answer' quiz.id ques.id%}">
             {% csrf_token %}

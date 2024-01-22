@@ -26,7 +26,8 @@ class profilePicForm(forms.ModelForm):
     profile_image = forms.ImageField(label='Profile Picture', required=False)
     class Meta:
         model = UserProfile
-        fields = ['profile_image',] 
+        fields = ['profile_image','user'] 
+        widgets = {'user': forms.HiddenInput()}
 
 
 class ChangeUserForm(UserChangeForm):

@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from quiz.models import Quiz
-from django.contrib.auth.models import User
 from category.models import Category
 from account.models import UserProfile
 

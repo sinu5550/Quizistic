@@ -21,9 +21,15 @@
             <div class="navbar-nav  item-nav gap-2 ms-lg-auto 2 align-items-center ">
                 {% if user.is_authenticated %}
                 <div class="fw-medium ">Welcome, {{ request.user.first_name }} {{ request.user.last_name }} </div>
-                <div class="btn-group dropstart">
-                    <button type="button" class="btn px-0 border-0 rounded-0" data-bs-toggle="dropdown">
-                        <img src="{% static 'images/default.png' %}" class="profile-pic rounded-5" alt="Profile Pic">
+                <div class="btn-group dropstart" data-bs-hover="dropdown">
+                    <button type=" button" class="btn px-0 border-0 rounded-0" data-bs-toggle="dropdown">
+                        {% if user.account.profile_image and user.account.profile_image.url %}
+                        <img src="{{ user.account.profile_image.url }}" class="profile-pic" alt="Profile Pic"
+                            style="border-radius: 50%; height: 45px; width: 45px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% else %}
+                        <img src="{% static 'images/default.png' %}" class="profile-pic" alt="Default Profile Pic"
+                            style="border-radius: 50%; height: 45px; width: 45px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% endif %}
                     </button>
                     <ul class="dropdown-menu mt-5 ">
                         <li><a href="{% url 'profile' %}" class="rounded-0 text-decoration-none"><button
@@ -41,6 +47,7 @@
                     </ul>
                 </div>
 
+
                 {% else%}
                 <a href=" {% url 'register' %}" class="btn btn-outline-danger rounded-0">Sign Up</a>
                 <a href="{% url 'login' %}" class="btn btn-danger rounded-0">Login</a>
@@ -49,4 +56,5 @@
             </div>
         </div>
     </div>
+
 </nav>
