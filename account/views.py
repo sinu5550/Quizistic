@@ -16,6 +16,8 @@ from .tokens import account_activation_token
 from django.utils.safestring import mark_safe
 from django.contrib.auth.forms import  PasswordChangeForm
 from django.contrib.auth import  update_session_auth_hash
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 def activate(request, uidb64, token):
@@ -38,6 +40,12 @@ def activate(request, uidb64, token):
     return redirect('home')
 
 def activateEmail(request, user, to_email):
+    try:
+        validate_email(to_email)
+    except ValidationError as e:
+        messages.error(request, f'Invalid email address: {to_email}. {e.message}')
+        return
+
     mail_subject = "Activate your user account."
     message = render_to_string("activate_account.html", {
         'user': user,
@@ -98,7 +106,8 @@ class UserLogoutView(LogoutView):
 def profile(request):
     if request.method == 'POST':
         profile_form = forms.ChangeUserForm(request.POST, instance = request.user)
-        profile_pic_form = forms.profilePicForm(request.POST, request.FILES or None,instance=request.user.account)
+        user_account = getattr(request.user, 'account', None)
+        profile_pic_form = forms.profilePicForm(request.POST, request.FILES or None,instance=user_account)
         if profile_form.is_valid() and profile_pic_form.is_valid():
             profile_form.save()
             profile_pic_form.instance.user = request.user
@@ -109,7 +118,7 @@ def profile(request):
     
     else:
         profile_form = forms.ChangeUserForm(instance = request.user)
-        profile_pic_form = forms.profilePicForm(instance=request.user.account)
+        profile_pic_form = forms.profilePicForm(instance=getattr(request.user, 'account', None))
     return render(request, 'profile.html',{'form' : profile_form , 'profile_pic_form':profile_pic_form})
 
 @login_required
