@@ -35,6 +35,9 @@
                         <li><a href="{% url 'profile' %}" class="rounded-0 text-decoration-none"><button
                                     class="dropdown-item " type="button">
                                     <i class="bi bi-person-fill me-2"></i>Profile</button></a></li>
+                        <li><a href="{% url 'pass_change' %}" class="rounded-0 text-decoration-none"><button
+                                    class="dropdown-item " type="button">
+                                    <i class="bi bi-lock-fill me-2"></i></i>Change Password</button></a></li>
 
                         <li>
                             <form method="post" action="{% url 'logout' %}">

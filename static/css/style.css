@@ -10,9 +10,9 @@ body {
     border-radius: 50%;
 }
 
-.quiz-card {
+/* .quiz-card {
     max-width: 32%;
-}
+} */
 
 .dropdown:hover .dropdown-menu {
     display: block;

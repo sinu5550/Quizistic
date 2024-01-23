@@ -3,7 +3,7 @@
 {% block content %}
 <h3 class="text-center my-5">Ratings for {{quiz.title}} Quiz</h3>
 <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-6 order-2 order-md-1">
         <div class="col">
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -35,19 +35,21 @@
 
         </div>
     </div>
-    <div class="col-6 card mb-2">
-        <div class="card-body">
-            <form method="post">
-                <h1>Give Ratings & Review</h1>
-                {% csrf_token %}
-                {{comment_form | crispy}}
-                {% if user.is_authenticated %}
-                <button class="btn btn-danger rounded-0" type="submit">Submit</button>
-                {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary  px-3 py-1 rounded-0">Login to
-                    Give
-                    Feedback</a>
-                {% endif %}
+    <div class="col-12 col-md-6 order-1 order-md-2 mb-2">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <h1>Give Ratings & Review</h1>
+                    {% csrf_token %}
+                    {{comment_form | crispy}}
+                    {% if user.is_authenticated %}
+                    <button class="btn btn-danger rounded-0" type="submit">Submit</button>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary  px-3 py-1 rounded-0">Login to
+                        Give
+                        Feedback</a>
+                    {% endif %}
+            </div>
         </div>
     </div>
 </div>

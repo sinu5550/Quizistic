@@ -9,3 +9,7 @@ class CommentForm(forms.ModelForm):
         labels = {
             'choice': 'Give a Ratings',
         }
+    body = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 2}),
+        required=False  
+        )

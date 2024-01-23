@@ -3,51 +3,53 @@
 
 {% block content %}
 
-<div class="container mt-5 w-75 ">
-    <h3 class="text-center fw-bold mt-3">Quiz Title: {{quiz.title}}</h3>
-    <div class="card my-4">
-        {% if ques %}
+<div class="container row gap-0 d-flex justify-content-center mt-5 ">
+    <h3 class="text-center fw-bold">Quiz Title: {{quiz.title}}</h3>
+    <div class="col-12 col-md-8 px-0 mx-0">
+        <div class="card  my-4 mx-auto px-0">
+            {% if ques %}
 
-        <h4 class="card-header">Question no.
-            {{ request.session.question_counter|default:"1"}} out of {{quiz.question_set.count}}<span id="time"
-                class="float-end text-danger">00:00</span>
-        </h4>
+            <h4 class="card-header">Question
+                {{ request.session.question_counter|default:"1"}} out of {{quiz.question_set.count}}<span id="time"
+                    class="float-end text-danger">00:00</span>
+            </h4>
 
-        <form method="post" action="{% url 'submit_answer' quiz.id ques.id%}">
-            {% csrf_token %}
-            <div class="card-body">
-                <p class="fw-medium fs-3">{{ques.question}}</p>
-                <table class="table table-light">
-                    <tr onclick="selectRadio('option_1', '{{ques.opt_1}}')">
-                        <td style="width: 20px;"><input type="radio" value="{{ques.opt_1}}" name="answer"
-                                id="option_1" /></td>
-                        <th><label for="option_1">{{ques.opt_1}}</label></th>
-                    </tr>
-                    <tr onclick="selectRadio('option_2', '{{ques.opt_2}}')">
-                        <td style="width: 20px;"><input type="radio" value="{{ques.opt_2}}" name="answer"
-                                id="option_2" /></td>
-                        <th><label for="option_2">{{ques.opt_2}}</label></th>
-                    </tr>
-                    <tr onclick="selectRadio('option_3', '{{ques.opt_3}}')">
-                        <td style="width: 20px;"><input type="radio" value="{{ques.opt_3}}" name="answer"
-                                id="option_3" /></td>
-                        <th><label for="option_3">{{ques.opt_3}}</label></th>
-                    </tr>
-                    <tr onclick="selectRadio('option_4', '{{ques.opt_4}}')">
-                        <td style="width: 20px;"><input type="radio" value="{{ques.opt_4}}" name="answer"
-                                id="option_4" /></td>
-                        <th><label for="option_4">{{ques.opt_4}}</label></th>
-                    </tr>
-                </table>
-            </div>
-            <div class="card-footer">
-                <input id="skipBtn" type="submit" name="skip" value="Skip" class="btn btn-danger">
-                <input type="submit" name="submit" value="Submit" class="btn btn-primary submitBtn">
-            </div>
-        </form>
-        {% else %}
-        <p class="display-2 fw-bold text-center mt-4">No question available.</p>
-        {% endif %}
+            <form method="post" action="{% url 'submit_answer' quiz.id ques.id%}">
+                {% csrf_token %}
+                <div class="card-body">
+                    <p class="fw-medium fs-3">{{ques.question}}</p>
+                    <table class="table table-light">
+                        <tr onclick="selectRadio('option_1', '{{ques.opt_1}}')">
+                            <td style="width: 20px;"><input type="radio" value="{{ques.opt_1}}" name="answer"
+                                    id="option_1" /></td>
+                            <th><label for="option_1">{{ques.opt_1}}</label></th>
+                        </tr>
+                        <tr onclick="selectRadio('option_2', '{{ques.opt_2}}')">
+                            <td style="width: 20px;"><input type="radio" value="{{ques.opt_2}}" name="answer"
+                                    id="option_2" /></td>
+                            <th><label for="option_2">{{ques.opt_2}}</label></th>
+                        </tr>
+                        <tr onclick="selectRadio('option_3', '{{ques.opt_3}}')">
+                            <td style="width: 20px;"><input type="radio" value="{{ques.opt_3}}" name="answer"
+                                    id="option_3" /></td>
+                            <th><label for="option_3">{{ques.opt_3}}</label></th>
+                        </tr>
+                        <tr onclick="selectRadio('option_4', '{{ques.opt_4}}')">
+                            <td style="width: 20px;"><input type="radio" value="{{ques.opt_4}}" name="answer"
+                                    id="option_4" /></td>
+                            <th><label for="option_4">{{ques.opt_4}}</label></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <input id="skipBtn" type="submit" name="skip" value="Skip" class="btn btn-danger">
+                    <input type="submit" name="submit" value="Submit" class="btn btn-primary submitBtn">
+                </div>
+            </form>
+            {% else %}
+            <p class="display-2 fw-bold text-center mt-4">No question available.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 

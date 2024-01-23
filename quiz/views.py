@@ -8,9 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib import messages
 from datetime import timedelta
-
+from django.utils import timezone
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 # Create your views here.
 
@@ -33,24 +34,33 @@ def all_quiz_view(request,category_slug=None):
 def question_view(request,q_id):
     request.session['question_counter'] = 1
     quiz = models.Quiz.objects.get(id=q_id)
-    models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
+    # models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
     question = models.Question.objects.filter(quiz=quiz).order_by('id').first()
-    
     
     lastAttemp = None
     futureTime = None
-    hoursLimit = 24
+    hoursLimit = 1/12
     countAttemp = models.userQuizAttempts.objects.filter(user=request.user, quiz = quiz).count()
     if countAttemp == 0:
         models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
     else:
         lastAttemp= models.userQuizAttempts.objects.filter(user = request.user, quiz=quiz).order_by('-id').first()
         futureTime = lastAttemp.attemp_time+ timedelta (hours = hoursLimit)
-        if lastAttemp and lastAttemp.attemp_time < futureTime :
-            messages.warning(request,'You already attempted this quiz. Please come back after 24 hours.')
+        if lastAttemp and timezone.now() < futureTime :
+            remaining_time = futureTime - timezone.now()
+            minutes, seconds = divmod(remaining_time.seconds, 60)
+            hours, minutes = divmod(minutes, 60)
+            remaining_time_str = f"{hours} hours, {minutes} minutes, and {seconds} seconds"
+            msg = f'You already attempted this quiz. Please come back after <b>{remaining_time_str}.</b>'
+            messages.warning(request,mark_safe(msg) )
             return all_quiz_view(request,None)
-        else:
-            models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
+        models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
+        lastAttemp.delete()
+        models.userQuizAttempts.objects.create(user=request.user, quiz=quiz)
+        # else:
+        #     models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
+        #     models.userQuizAttempts.objects.filter(user=request.user, quiz = quiz).delete()
+        #     models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
     
     return render(request,'questions.html',{'ques':question,'quiz': quiz, 'lastAttemp':futureTime,})
 
