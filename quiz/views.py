@@ -39,7 +39,7 @@ def question_view(request,q_id):
     
     lastAttemp = None
     futureTime = None
-    hoursLimit = 1/12
+    hoursLimit = 24
     countAttemp = models.userQuizAttempts.objects.filter(user=request.user, quiz = quiz).count()
     if countAttemp == 0:
         models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
@@ -57,10 +57,6 @@ def question_view(request,q_id):
         models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
         lastAttemp.delete()
         models.userQuizAttempts.objects.create(user=request.user, quiz=quiz)
-        # else:
-        #     models.UserAnswerSubmit.objects.filter(user=request.user, question__quiz=quiz).delete()
-        #     models.userQuizAttempts.objects.filter(user=request.user, quiz = quiz).delete()
-        #     models.userQuizAttempts.objects.create(user = request.user, quiz=quiz)
     
     return render(request,'questions.html',{'ques':question,'quiz': quiz, 'lastAttemp':futureTime,})
 
