@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="row align-items-center  my-5">
+<!-- <div class="row align-items-center  my-5">
     <div class="col-12 col-md-6 order-2 order-md-1 text-center">
         <h2 class="fw-bolder display-5 mt-5">Welcome to <span class="text-danger display-3 fw-bolder ">Quizistic.</span>
         </h2>
@@ -23,10 +23,110 @@
     <div class="col-12 col-md-6 d-flex order-1 order-md-2 justify-content-center">
         <img src="{% static 'images/answer.png' %}" class="w-75" alt="Answer Picture">
     </div>
+</div> -->
+
+<div class="swiffy-slider  slider-nav-animation slider-nav-animation-fadein slider-item-first-visible slider-nav-round slider-indicators-outside slider-indicators-round slider-indicators-dark slider-nav-autoplay slider-nav-autopause "
+    id="swiffy-animation" data-slider-nav-autoplay-interval="4000">
+    <ul class="slider-container bg-body-tertiary py-5" id="container1">
+        <li id="slide1" class="slide-visible">
+            <div class="my-5 d-flex justify-content-center">
+                <div class="row container align-items-center m-0">
+                    <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+                        <h2 class="fw-bolder display-5 mt-5 mt-md-2">Welcome to <span
+                                class="text-danger display-3 fw-bolder ">Quizistic.</span>
+                        </h2>
+                        <div class="mt-2">
+                            <p class="fs-3 ">Make your brain more stonger By playing Quizzes</p>
+
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3">Take
+                                a
+                                Quiz <i class="bi bi-arrow-right"></i></a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3 ">Take a
+                                Quiz
+                                <i class="bi bi-arrow-right "></i></a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex order-1 order-md-2 justify-content-center">
+                        <img src="{% static 'images/brain.svg' %}" class="w-75" alt="Answer Picture">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li id="slide2">
+
+            <div class=" my-5 d-flex justify-content-center">
+                <div class="row container align-items-center m-0">
+                    <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+                        <h2 class="fw-bolder display-5 mt-5 mt-md-2">Choose the <span
+                                class="text-danger display-3 fw-bolder ">Correct</span> Answer
+                        </h2>
+                        <div class="mt-2">
+                            <p class="fs-3 ">Which will make your points upgraded.</p>
+
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3">Take
+                                a
+                                Quiz <i class="bi bi-arrow-right"></i></a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3">Take a
+                                Quiz
+                                <i class="bi bi-arrow-right "></i></a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex order-1 order-md-2 justify-content-center">
+                        <img src="{% static 'images/answer.png' %}" class="w-75" alt="Answer Picture">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li id="slide3">
+            <div class="my-5 d-flex justify-content-center">
+                <div class="row container align-items-center m-0">
+                    <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+                        <h2 class="fw-bolder display-5 mt-5 mt-md-2">Think <span
+                                class="text-danger display-3 fw-bolder ">Deeply</span>
+                        </h2>
+                        <div class="mt-2">
+                            <p class="fs-3 ">Because deeply thinking can give you success with 90% correct answer.</p>
+
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'all_quiz' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3">Take
+                                a
+                                Quiz <i class="bi bi-arrow-right"></i></a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-danger rounded-pill fs-5  px-4 py-2 mt-3">Take a
+                                Quiz
+                                <i class="bi bi-arrow-right "></i></a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex order-1 order-md-2 justify-content-center">
+                        <img src="{% static 'images/problem-solving.svg' %}" class="w-75" alt="Answer Picture">
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <button type="button" class="slider-nav" aria-label="Go to previous"></button>
+    <button type="button" class="slider-nav slider-nav-next" aria-label="Go to next"></button>
+
+    <div class="slider-indicators">
+        <button aria-label="Go to slide" class="active "></button>
+        <button aria-label=" Go to slide"></button>
+        <button aria-label="Go to slide"></button>
+
+    </div>
 </div>
 
-
-<section class="my-5">
+<section class="my-5 pb-5">
     <div class="d-flex justify-content-center ">
         <h1 class="display-4 fw-bold border-bottom  border-2 text-center my-3 w-50 py-3">Running Quizzes</h1>
     </div>
@@ -71,7 +171,7 @@
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <a href="{% url 'ratings' quiz.id %}"
-                                class="text-white mx-auto btn btn-primary rounded-pill py-0  text-decoration-none">
+                                class="text-dark mx-auto btn bg-body-tertiary  shadow-sm rounded-pill py-0  text-decoration-none">
                                 Show Ratings <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -88,6 +188,8 @@
         {% endif %}
 
     </div>
-
+    <div class="container  my-5"><a href="{% url 'all_quiz' %}" class="btn btn-sm btn-danger rounded-0 float-end">More
+            Quizzes <i class="bi bi-arrow-right "></i></a>
+    </div>
 </section>
 {% endblock %}
