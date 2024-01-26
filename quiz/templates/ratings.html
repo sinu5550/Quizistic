@@ -28,7 +28,12 @@
 
                 {% for comment in comments %}
                 <div class="card-body border m-2 lh-1 ">
-                    <p><b>{{comment.user.username}}</b> <small>at {{comment.created_on}}</small></p>
+                    <p>
+                        <img src="{{ comment.user.account.profile_image.url }}" class="profile-pic me-1"
+                            alt="Profile Pic"
+                            style="border-radius: 50%; height: 30px; width: 30px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        <b> {{comment.user.username}}</b> <small>at {{comment.created_on}}</small>
+                    </p>
                     <p>{{comment.choice}}</p>
                     <p>"{{comment.body}}"</p>
                 </div>
