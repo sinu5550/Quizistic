@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mb-5 pb-3">
@@ -29,9 +30,15 @@
                 {% for comment in comments %}
                 <div class="card-body border m-2 lh-1 ">
                     <p>
+                        {% if comment.user.account.profile_image and comment.user.account.profile_image.url %}
                         <img src="{{ comment.user.account.profile_image.url }}" class="profile-pic me-1"
                             alt="Profile Pic"
                             style="border-radius: 50%; height: 30px; width: 30px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% else %}
+                        <img src="{% static 'images/default.png' %}" class="profile-pic me-1" alt="Profile Pic"
+                            style="border-radius: 50%; height: 30px; width: 30px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% endif %}
+
                         <b> {{comment.user.username}}</b> <small>at {{comment.created_on}}</small>
                     </p>
                     <p>{{comment.choice}}</p>
