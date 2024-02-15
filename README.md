@@ -1,6 +1,6 @@
 # admin details
-* user: admin
-* pass: admin
+* user: knock me in my gmail (intisar.siyan5550@gmail.com)
+* pass: knock me in my gmail (intisar.siyan5550@gmail.com)
 * admin page url - [https://quizistic-sinu5550.onrender.com/admin]
 # Details about Quizistic.  
   This is a quiz playing web application, where a user can play quizzes, get score etc.
